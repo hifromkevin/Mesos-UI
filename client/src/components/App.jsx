@@ -22,50 +22,33 @@ export default class App extends Component {
       ]
     }
 
-    this.add = this.add.bind(this);
-    this.destroy = this.destroy.bind(this);
     this.addServer = this.addServer.bind(this);
     this.destroyServer = this.destroyServer.bind(this);
-  }
-
-  add(item) {
-    let newApp = this.state.activeApps.slice();
-    newApp.push([item, true]);
-    this.setState({
-      activeApps: newApp
-    });
-  }
-
-  destroy(item) {
-    var activeApps = this.state.activeApps;
-    for (var i = (activeApps.length - 1); i >= 0; i--) {
-      if(activeApps[i][0] === item) {
-        var newApps = activeApps.slice();
-        newApps = newApps.slice(0, i).concat(newApps.slice(i + 1));
-        this.setState({
-          activeApps: newApps
-        });
-        break;
-      }
-    }
-    console.log(item, this.state.activeApps);
+    this.addApp = this.addApp.bind(this);
   }
 
   addServer() {
+    //make a copy of state, and establish a variable to create key for our server
     let newApp = this.state.serverCanvas.slice();
     let idNumber;
 
+    // Look for the most recent server
+    // If found, capture its key and increment it
     for (var i = (newApp.length - 1); i >=0; i--) {
       if (newApp[i][0] === 'server') {
         idNumber = newApp[i][2];
+        idNumber++;
         break;
       }
     }
 
+    // If no key was found, then set our id to zero
     if(idNumber === undefined) idNumber = 0;
 
-    newApp.push(['server', 0, idNumber+1]);
+    // Add our new server
+    newApp.push(['server', 0, idNumber]);
 
+    // Update state
     this.setState({
       serverCanvas: newApp
     });
@@ -74,19 +57,41 @@ export default class App extends Component {
   }
 
   destroyServer() {
-    var activeServers = this.state.serverCanvas.slice();
+    //Make copy of state
+    var serverCanvasState = this.state.serverCanvas.slice();
 
-    for (var i = (activeServers.length - 1); i >= 0; i--) {
-      console.log(activeServers[i][0])
-      if (activeServers[i][0] === 'server') {
-        console.log('hi')
-        activeServers = activeServers.slice(0, i).concat(activeServers.slice(i + 1));
+    //Loop though our serverCanvas state, starting with most recent recation
+    for (var i = (serverCanvasState.length - 1); i >= 0; i--) {
+      // if or when we find a server, slice our state array before and after
+      // found server to remove it from state
+      if (serverCanvasState[i][0] === 'server') {
+        serverCanvasState = serverCanvasState.slice(0, i).concat(serverCanvasState.slice(i + 1));
         break;
       }
     }
 
+    //update the state
     this.setState({
-      serverCanvas: activeServers
+      serverCanvas: serverCanvasState
+    });
+  }
+
+  addApp(item) {
+    let serverCanvasState = this.state.serverCanvas.slice();
+    let smallest;
+    for (var i = 0; i < serverCanvasState.length; i++) {
+      if (serverCanvasState[i][0] === 'server' && serverCanvasState[i][1] < 1 && !smallest) {
+        smallest = [serverCanvasState[i][1], serverCanvasState[i][2], i];
+        if (serverCanvasState[i][1] === 0) break;
+      } 
+    }
+
+    if(smallest) serverCanvasState[smallest[2]][1]++;
+
+    serverCanvasState.push([item, smallest[1]]);
+    console.log(serverCanvasState);
+    this.setState({
+      activeApps: serverCanvasState
     });
   }
 
@@ -109,6 +114,15 @@ export default class App extends Component {
             })
           }
 
+
+<div className={`available available__hadoop`}>
+  <p className='hadoop'>
+    Hadoop
+    <span onClick={() => this.addApp('hadoop')}>+</span> 
+    <span onClick={() => this.destroy(name)}>- Not working</span>
+  </p>
+</div>
+
         </div>
         <div className="server-canvas">
           <h2>Server Canvas</h2>
@@ -127,4 +141,28 @@ export default class App extends Component {
 };
 
 
+/*
+  add(item) {
+    let newApp = this.state.activeApps.slice();
+    newApp.push([item, true]);
+    this.setState({
+      activeApps: newApp
+    });
+  }
+
+  destroy(item) {
+    var activeApps = this.state.activeApps;
+    for (var i = (activeApps.length - 1); i >= 0; i--) {
+      if(activeApps[i][0] === item) {
+        var newApps = activeApps.slice();
+        newApps = newApps.slice(0, i).concat(newApps.slice(i + 1));
+        this.setState({
+          activeApps: newApps
+        });
+        break;
+      }
+    }
+    console.log(item, this.state.activeApps);
+  }
+*/
 
