@@ -26,14 +26,11 @@ export default class App extends Component {
     this.setState({
       activeApps: newApp
     });
-    console.log(this.state.activeApps);
   }
 
   destroy(item) {
     var activeApps = this.state.activeApps;
-    console.log('?', this.state.activeApps);
-    for (var i = (activeApps.length - 1); i <= 0; i++) {
-      console.log('!', activeApps[i])
+    for (var i = (activeApps.length - 1); i >= 0; i--) {
       if(activeApps[i][0] === item) {
         var newApps = activeApps.slice();
         newApps = newApps.slice(0, i).concat(newApps.slice(i + 1));
