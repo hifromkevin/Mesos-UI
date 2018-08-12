@@ -1,0 +1,87 @@
+//Variables
+$black: #000
+$white: #fff
+$darkestGray: #141414
+$darkGray: #1e1e1e
+$lightGray: #646464
+
+
+//make these gradients
+$pink: #ff69b4
+$blue: #00f
+$cyan: #0ff
+$mint: #98ff98
+$lime: #0f0
+
+@import url('https://fonts.googleapis.com/css?family=Karla');
+
+//RESETS
+*
+  margin: 0
+  padding: 0
+
+body
+  background: $black
+  font-family: 'Karla', sans-serif;
+  height: 100%
+
+//Divisions
+.app-sidebar
+  position: absolute
+  top: 0
+  left: 0
+  bottom: 0
+  color: $lightGray
+  background: $darkGray
+  width: 25%
+  float: left
+  height: 100%
+  &__title
+    font-size: 0.4em
+
+.available
+  background: $darkestGray
+  padding: 5%
+  border-bottom: 1px solid $darkGray
+  &__hadoop 
+    border-left: 2px solid $pink
+  &__rails 
+    border-left: 2px solid $blue
+  &__chronos 
+    border-left: 2px solid $cyan
+  &__storm 
+    border-left: 2px solid $mint
+  &__spark
+    border-left: 2px solid $lime
+
+.server-canvas
+  color: $white
+  margin-left: 25%
+  width: 71%
+  float: left
+  padding: 2%
+
+.server
+  background: #f90
+  width: 100px
+  height: 100px
+  margin: 0 1% 1% 0
+  display: inline-block
+  float: left
+
+// Color Coding
+.hadoop 
+  color: $pink
+
+.rails 
+  color: $blue
+
+.chronos 
+  color: $cyan
+
+.storm 
+  color: $mint
+
+.spark
+  color: $lime
+
