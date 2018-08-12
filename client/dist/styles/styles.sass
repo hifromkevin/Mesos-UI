@@ -1,10 +1,13 @@
+//Imports
+@import url('https://fonts.googleapis.com/css?family=Karla');
+
 //Variables
+$font-family: 'Karla', sans-serif
 $black: #000
 $white: #fff
 $darkestGray: #141414
 $darkGray: #1e1e1e
 $lightGray: #646464
-
 
 //make these gradients
 $pink: #ff69b4
@@ -13,7 +16,6 @@ $cyan: #0ff
 $mint: #98ff98
 $lime: #0f0
 
-@import url('https://fonts.googleapis.com/css?family=Karla');
 
 //RESETS
 *
@@ -22,7 +24,7 @@ $lime: #0f0
 
 body
   background: $black
-  font-family: 'Karla', sans-serif;
+  font-family: $font-family
   height: 100%
 
 //Divisions
@@ -68,7 +70,7 @@ body
   display: inline-block
   float: left
   &__server
-    background: #f90
+    background: $darkGray
   &__hadoop 
     background: $pink
   &__rails 
