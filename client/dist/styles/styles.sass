@@ -61,13 +61,24 @@ body
   float: left
   padding: 2%
 
-.server
-  background: #f90
+.block
   width: 100px
   height: 100px
   margin: 0 1% 1% 0
   display: inline-block
   float: left
+  &__server
+    background: #f90
+  &__hadoop 
+    background: $pink
+  &__rails 
+    background: $blue
+  &__chronos 
+    background: $cyan
+  &__storm 
+    background: $mint
+  &__spark
+    background: $lime
 
 // Color Coding
 .hadoop 
