@@ -8,11 +8,12 @@ export default class App extends Component {
     this.state = {
       availableApps: ['hadoop', 'rails', 'chronos', 'storm', 'spark'],
       server: [1,1,1,1],
-      hadoop: 0,
-      rails: 0,
-      chronos: 0,
-      storm: 0,
-      spark: 0
+      activeApps: [
+        ['server', true],
+        ['server', true],
+        ['server', true],
+        ['server', true]
+      ]
     }
 
     this.add = this.add.bind(this);
@@ -20,22 +21,29 @@ export default class App extends Component {
   }
 
   add(item) {
-    let newItem = this.state[item].slice();
-    newItem.push(1);
+    let newApp = this.state.activeApps.slice();
+    newApp.push([item, true]);
     this.setState({
-      [item]: newItem
-    })
+      activeApps: newApp
+    });
+    console.log(this.state.activeApps);
   }
 
   destroy(item) {
-    if (this.state[item].length > 0) {
-      let newItem = this.state[item].slice();
-      newItem.pop();
-
-      this.setState({
-        [item]: newItem
-      })
+    var activeApps = this.state.activeApps;
+    console.log('?', this.state.activeApps);
+    for (var i = (activeApps.length - 1); i <= 0; i++) {
+      console.log('!', activeApps[i])
+      if(activeApps[i][0] === item) {
+        var newApps = activeApps.slice();
+        newApps = newApps.slice(0, i).concat(newApps.slice(i + 1));
+        this.setState({
+          activeApps: newApps
+        });
+        break;
+      }
     }
+    console.log(item, this.state.activeApps);
   }
 
 
@@ -48,15 +56,24 @@ export default class App extends Component {
 
           <p className="app-sidebar__title">Available Apps</p>
           {this.state.availableApps.map(app => {
-              return <AvailableApps name={app} key={app} add={this.add} destroy={this.destroy} />
+              return <AvailableApps 
+                        name={app} 
+                        key={app} 
+                        add={this.add} 
+                        destroy={this.destroy} 
+                      />
             })
           }
 
         </div>
         <div className="server-canvas">
           <h2>Server Canvas</h2>
-          {this.state.server.map((server, i) => {
-              return <div className="server" key={i}></div>
+          {this.state.activeApps.map((app, i) => {
+              return (
+                <div className={`block block__${app[0]}`} key={i}>
+                  <p>{app[0]}</p>
+                </div>
+              )
             })
           }
         </div>
@@ -66,22 +83,4 @@ export default class App extends Component {
 };
 
 
-/*
 
-  add(item) {
-    this.setState({
-      [item]: this.state[item] + 1
-    })
-    console.log(item, this.state[item])
-  }
-
-  destroy(item) {
-    if (this.state[item] > 0) {
-      this.setState({
-        [item]: this.state[item] - 1
-      })
-    }
-    console.log(item, this.state[item])
-  }
-
-*/
