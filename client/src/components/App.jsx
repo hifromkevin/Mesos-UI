@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AvailableApps from './AvailableApps.jsx';
+import ServerCanvasBlock from './ServerCanvasBlock.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -7,16 +8,12 @@ export default class App extends Component {
 
     this.state = {
       availableApps: ['hadoop', 'rails', 'chronos', 'storm', 'spark'],
-      activeApps: [
-        ['server', true],
-        ['server', true],
-        ['server', true],
-        ['server', true]
-      ],
+      // serverCanvas servers have three properties: name, # of active apps, and a key
+      // serverCanvas apps have two properties: name, and associated key
       serverCanvas: [
         ['server', 0, 0],
         ['server', 0, 1],
-        ['server', 0, 2],
+        ['server', 1, 2],
         ['server', 0, 3],
         ['hadoop', 2]
       ]
@@ -80,19 +77,34 @@ export default class App extends Component {
     let serverCanvasState = this.state.serverCanvas.slice();
     let smallest;
     for (var i = 0; i < serverCanvasState.length; i++) {
-      if (serverCanvasState[i][0] === 'server' && serverCanvasState[i][1] < 1 && !smallest) {
-        smallest = [serverCanvasState[i][1], serverCanvasState[i][2], i];
-        if (serverCanvasState[i][1] === 0) break;
+      if (serverCanvasState[i][0] === 'server' && serverCanvasState[i][1] < 2) {
+        if (!smallest) {
+          smallest = [serverCanvasState[i][1], serverCanvasState[i][2], i];
+        } 
+        if (serverCanvasState[i][1] === 0) {
+          smallest = [serverCanvasState[i][1], serverCanvasState[i][2], i];
+          break;
+        } 
       } 
     }
 
-    if(smallest) serverCanvasState[smallest[2]][1]++;
+    if(smallest) {
+      serverCanvasState[smallest[2]][1]++;
+      serverCanvasState.push([item, smallest[1]]);
+      console.log(serverCanvasState);
+    }
 
-    serverCanvasState.push([item, smallest[1]]);
-    console.log(serverCanvasState);
     this.setState({
-      activeApps: serverCanvasState
+      serverCanvas: serverCanvasState
     });
+  }
+
+  checkName(name) {
+    if(name !== 'server') {
+      return (
+        <p>{name}</p>
+      )
+    }
   }
 
 
@@ -108,29 +120,18 @@ export default class App extends Component {
               return <AvailableApps 
                         name={app} 
                         key={app} 
-                        add={this.add} 
+                        addApp={this.addApp} 
                         destroy={this.destroy} 
                       />
             })
           }
-
-
-<div className={`available available__hadoop`}>
-  <p className='hadoop'>
-    Hadoop
-    <span onClick={() => this.addApp('hadoop')}>+</span> 
-    <span onClick={() => this.destroy(name)}>- Not working</span>
-  </p>
-</div>
 
         </div>
         <div className="server-canvas">
           <h2>Server Canvas</h2>
           {this.state.serverCanvas.map((app, i) => {
               return (
-                <div className={`block block__${app[0]}`} key={i}>
-                  <p>{app[0]}</p>
-                </div>
+                <ServerCanvasBlock app={app} checkName={this.checkName} key={i} />
               )
             })
           }
