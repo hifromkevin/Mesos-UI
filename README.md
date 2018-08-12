@@ -10,6 +10,8 @@ From within the root directory:
 ```sh
 npm install 
 npm start
+
+Go to http://localhost:9000/ on your browser
 ```
 
 ## Selected Libraries and Technologies
