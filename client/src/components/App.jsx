@@ -168,8 +168,8 @@ export default class App extends Component {
     return (
       <div>
         <div className="app-sidebar">
-          <p onClick={this.addServer}>Add Server</p>
-          <p onClick={this.destroyServer}>Destroy</p>
+          <p className="app-sidebar__text" onClick={this.addServer}>Add Server</p>
+          <p className="app-sidebar__text" onClick={this.destroyServer}>Destroy</p>
 
           <p className="app-sidebar__title">Available Apps</p>
           {this.state.availableApps.map(app => {
