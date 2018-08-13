@@ -38,7 +38,6 @@ export default class App extends Component {
         break;
       }
     }
-
     // Add our new server
     newApp.push(['server', 0, idNumber]);
 
@@ -65,9 +64,11 @@ export default class App extends Component {
 
     this.setState({
       serverCanvas: serverCanvasState
-    });
+    })
 
-    this.reassignApp(serverKey);
+    setTimeout(() => {
+      this.reassignApp(serverKey, serverCanvasState)
+    }, 100);
   }
 
   addApp(appName) {
@@ -128,15 +129,36 @@ export default class App extends Component {
     }
   }
 
-  reassignApp(key) {
-    let serverCanvasState = this.state.serverCanvas.slice();
+  reassignApp(key, newState) {
+    let appsOnServer = [];
 
+    // Find all apps that belong to the deleted server, and 
+    // remove them from the queue 
+    let i = newState.length;
+    while (i--) {
+      if (newState[i][0] !== 'server' && newState[i][1] === key) {
+        appsOnServer.push(newState[i][0]);
+        newState = newState.slice(0, i).concat(newState.slice(i + 1));
+      }
+    }
+
+    this.setState({
+      serverCanvas: newState
+    });
+
+    // Reassign the apps from the deleted server (if 
+    // there are any open spaces)
+    if (appsOnServer.length) {
+      for (var j = 0; j < appsOnServer.length; j++) {
+        this.addApp(appsOnServer[j]);
+      }
+    }
   } 
 
   checkName(name) {
     if(name !== 'server') {
       return (
-        <p>{name}</p>
+        <p>{name[0].toUpperCase() + name.slice(1)}</p>
       )
     }
   }
