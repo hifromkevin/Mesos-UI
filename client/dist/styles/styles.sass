@@ -3,18 +3,20 @@
 
 //Variables
 $font-family: 'Karla', sans-serif
+
 $black: #000
 $white: #fff
 $darkestGray: #141414
 $darkGray: #1e1e1e
 $lightGray: #646464
-
-//make these gradients
 $pink: #ff69b4
 $blue: #00f
 $cyan: #0ff
 $mint: #98ff98
 $lime: #0f0
+
+$break-small: 600px
+$break-large: 1000px
 
 
 //RESETS
@@ -26,6 +28,9 @@ body
   background: $black
   font-family: $font-family
   height: 100%
+
+h2
+  line-height: 150%
 
 //Divisions
 .app-sidebar
@@ -39,7 +44,8 @@ body
   float: left
   height: 100%
   &__title
-    font-size: 0.4em
+    font-size: 0.7em
+    margin-top: 50%
 
 .available
   background: $darkestGray
@@ -66,9 +72,9 @@ body
   padding: 2%
 
 .block
-  width: 100px
+  width: 23%
   height: 100px
-  margin: 0 1% 1% 0
+  margin: 0 2% 1% 0
   display: inline-block
   float: left
   &__server
@@ -83,6 +89,11 @@ body
     background: $mint
   &__spark
     background: $lime
+  @media screen and (max-width: $break-small) 
+    width: 98%
+  @media screen and (max-width: $break-large) 
+    width: 48%    
+  
 
 // Color Coding
 .hadoop 
@@ -99,4 +110,3 @@ body
 
 .spark
   color: $lime
-
