@@ -10,19 +10,28 @@ export default class App extends Component {
       availableApps: ['hadoop', 'rails', 'chronos', 'storm', 'spark'],
       // serverCanvas servers have three properties: name, # of active apps, and a key
       // serverCanvas apps have two properties: name and associated key
-      serverCanvas: [
-        ['server', 0, 0],
-        ['server', 0, 1],
-        ['server', 0, 2],
-        ['server', 0, 3]
-      ], 
-      serverLoad: 2
+      serverCanvas: [], 
+      // This number was added to state in the event it would be changed later
+      serverLoad: 2,
+      numberOfServers: 4
     }
 
     this.addServer = this.addServer.bind(this);
     this.destroyServer = this.destroyServer.bind(this);
     this.addApp = this.addApp.bind(this);
     this.removeApp = this.removeApp.bind(this);
+  }
+
+  componentWillMount() {
+    let serversOnStartup = [];
+
+    for (var i = 0; i < this.state.numberOfServers; i++) {
+      serversOnStartup.push(['server', 0, i]);
+    }
+
+    this.setState({
+      serverCanvas: serversOnStartup
+    });
   }
 
   addServer() {
@@ -172,6 +181,9 @@ export default class App extends Component {
           <p className="app-sidebar__text" onClick={this.destroyServer}>Destroy</p>
 
           <p className="app-sidebar__title">Available Apps</p>
+
+
+
           {this.state.availableApps.map(app => {
               return <AvailableApps 
                         name={app} 
@@ -185,6 +197,7 @@ export default class App extends Component {
         </div>
         <div className="server-canvas">
           <h2>Server Canvas</h2>
+
           {this.state.serverCanvas.map((app, i) => {
               return (
                 <ServerCanvasBlock app={app} checkName={this.checkName} key={i} />
