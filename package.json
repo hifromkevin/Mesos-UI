@@ -1,0 +1,35 @@
+{
+  "name": "mesos-ui",
+  "version": "1.0.0",
+  "description": "A visual representation of a distributed systems UI for Mesosphere",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hifromkevin/Mesos-UI.git"
+  },
+  "author": "Kevin Lam",
+  "license": "ISC",
+  "homepage": "https://github.com/github.com/hifromkevin#readme",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.22.1",
+    "webpack": "^4.12.2",
+    "webpack-cli": "^3.0.6",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  }
+}
